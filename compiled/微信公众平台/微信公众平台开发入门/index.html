@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>微信公众平台开发入门</title>
+  
+    <meta name="description" content="微信公众平台开发入门">
+  
+    <meta name="author" content="Hao Wang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">王浩的小课桌</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>微信公众平台开发入门 </h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p>因工作需要，要在微信公众平台上进行服务号的开发，现记录下开发流程。</p>
+
+<h2>环境</h2>
+
+<p>win7、IDEA14、Jdk1.7、微信公众平台测试号、外网域名</p>
+
+<h2>搭建基础开发环境</h2>
+
+<p>搭建web项目使用最简单的Servlet做消息入口。</p>
+
+<p>创建WeChatServlet 继承 HttpServlet</p>
+
+<p>在web.xml中配置sevlet的url路径</p>
+
+<pre><code>&lt;servlet-name&gt;wechat&lt;/servlet-name&gt;
+&lt;servlet-class&gt;cn.wh.wechat.WeChatServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;wechat&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/wechat&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+
+<p>在微信公众平台申请管理测试号</p>
+
+<p><a href="http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&amp;t=sandbox/index">http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&amp;t=sandbox/index</a></p>
+
+<p>登陆之后设置URL和token，URL就是外网域名/项目名/wechat,必须是80端口。</p>
+
+<p>配置消息通道认证</p>
+
+<p>WeChatServlet的doGet方法如下：</p>
+
+<pre><code>protected void doGet(HttpServletRequest request,
+        HttpServletResponse response) throws ServletException, IOException {
+    String signature = request.getParameter(&quot;signature&quot;);// 微信加密签名
+    String timestamp = request.getParameter(&quot;timestamp&quot;);// 时间戳
+    String nonce = request.getParameter(&quot;nonce&quot;);// 随机数
+    String echostr = request.getParameter(&quot;echostr&quot;);// 随机字符串
+    if (StringUtils.isBlank(signature) || StringUtils.isBlank(timestamp)|| StringUtils.isBlank(nonce)) {
+        Writer out = response.getWriter();
+        out.write(&quot;error...&quot;);
+        out.flush();
+        out.close();
+        return;
+    }
+    // 重写totring方法，得到三个参数的拼接字符串
+    List&lt;String&gt; list = new ArrayList&lt;String&gt;(3) {
+        private static final long serialVersionUID = 2621444383666420433L;
+
+        public String toString() {
+            return this.get(0) + this.get(1) + this.get(2);
+        }
+    };
+    list.add(TOKEN);
+    list.add(timestamp);
+    list.add(nonce);
+    Collections.sort(list);// 排序
+    String tmpStr = new MySecurity().encode(list.toString(),
+            MySecurity.SHA_1);// SHA-1加密
+    Writer out = response.getWriter();
+    if (signature.equals(tmpStr)) {
+        out.write(echostr);// 请求验证成功，返回随机码
+    } else {
+        out.write(&quot;&quot;);
+    }
+    out.flush();
+    out.close();
+}
+</code></pre>
+
+<p>在微信公众平台测试页面点击提交请求会到WeChatServlet的doGet方法，如果验证通过返回验证码。</p>
+
+<p>以上是在微信公众平台接入开发模式。</p>
+
+<p>后续会写一些开发中用到的消息处理机制。</p>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/" title="java des加密实践">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/sublime/sublime-text2-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6/" title="sublime text2 安装插件">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2015-07-08</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0-ref">微信公众平台 <span>1</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0-ref">微信公众平台 <span>1</span></a>
+</li>
+    
+      <li>
+  <a href="/tags/#java-ref">java <span>4</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; Hao Wang 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="//cdnjscn.b0.upaiyun.com/libs/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>
