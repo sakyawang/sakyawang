@@ -96,6 +96,206 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/设计模式/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99/">面向对象设计基本原则</a> <span class="date">2017-10-27</span></h3>
+
+  <h2>面向对象设计原则SOLID</h2>
+
+<p>参考：</p>
+
+<p><a href="https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriented-design">https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriented-design</a></p>
+
+<p><a href="http://www.cnblogs.com/hellojava/archive/2013/03/18/2966684.html">http://www.cnblogs.com/hellojava/archive/2013/03/18/2966684.html</a></p>
+
+<h3>1. S – Single Responsibility Principle 职责单一原则</h3>
+
+<blockquote>
+<p>对象应该仅具有一种单一功能。
+概念上和unix的设计原则 “Do one thing and do it well”很相似。听起来很简单但是实践起来很难。</p>
+</blockquote>
+
+<p>比如，现在有一些图形要计算所有图形的面积。
+```java
+class Circle {</p>
+
+<pre><code>private double radius;
+</code></pre>
+
+
+  <div class="more">
+    <a href="/设计模式/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/java/rpc/">rpc</a> <span class="date">2017-05-11</span></h3>
+
+  <h1>基于jdk序列化和tcp的rpc调用</h1>
+
+<p><strong>RPC调用图</strong></p>
+
+<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/rpc.png" width = "800" height = "400" alt="rpc" align=center /></p>
+
+<p>1、2和服务注册未实现</p>
+
+<h2><strong>文件说明</strong></h2>
+
+<pre><code>AbstractService 抽象服务类
+RpcRequest      服务请求对象
+RpcResponse     服务返回结果对象
+
+RpcClient       rpc客户端
+RpcServer       rpc服务端
+
+UserService     用户服务
+User            用户对象
+UserParam       用户参数对象
+</code></pre>
+
+
+  <div class="more">
+    <a href="/java/rpc/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/nginx/nginx-start/">nginx-start</a> <span class="date">2017-05-10</span></h3>
+
+  <h1>centos7下yum安装nginx并配置开机启动</h1>
+
+<hr />
+
+<ol>
+<li><p>新增yum源</p>
+
+<p>/etc/yum.repo.d下新建nginx.repo</p>
+
+<pre><code>[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+</code></pre></li>
+
+<li><p>安装</p>
+
+<pre><code>sudo yum install nginx
+</code></pre></li>
+
+<li><p>配置</p></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/nginx/nginx-start/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/nexus/nexus/">nexus</a> <span class="date">2017-05-10</span></h3>
+
+  <h1>nexnus搭建maven私服配置导包</h1>
+
+<h2>安装配置</h2>
+
+<ol>
+<li><p>下载安装包</p>
+
+<pre><code>sudo wget https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.3.1-01-unix.tar.gz
+</code></pre></li>
+
+<li><p>安装运行</p>
+
+<pre><code>tar zxvf nexus-3.3.1-01-unix.tar.gz 
+cd nexus-3.3.1-01/      
+nohup ./nexus run
+</code></pre></li>
+
+<li><p>maven setting.xml配置</p>
+
+<pre><code>&lt;servers&gt;
+    &lt;server&gt;  
+        &lt;id&gt;nexus&lt;/id&gt;  
+        &lt;username&gt;admin&lt;/username&gt;  
+        &lt;password&gt;admin123&lt;/password&gt;  
+    &lt;/server&gt;  
+&lt;/servers&gt;
+</code></pre></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/nexus/nexus/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/nodejs/Centos7-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEelasticsearch-head/">Centos7 安装配置elasticsearch-head</a> <span class="date">2017-05-10</span></h3>
+
+  <h1>Centos7 安装配置elasticsearch-head</h1>
+
+<h2>安装nodejs</h2>
+
+<ol>
+<li><p>配置yum源</p>
+
+<pre><code>curl --silent --location https://rpm.nodesource.com/setup_7.x | bash -
+</code></pre></li>
+
+<li><p>安装nodejs和npm</p>
+
+<pre><code>yum install -y nodejs
+</code></pre></li>
+</ol>
+
+<h2>配置淘宝npm镜像</h2>
+
+<ol>
+<li><p>通过config命令</p>
+
+<pre><code>npm config set registry https://registry.npm.taobao.org 
+npm info underscore （如果上面配置正确这个命令会有字符串response）
+</code></pre></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/nodejs/Centos7-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEelasticsearch-head/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/">centos7 lvs扩容</a> <span class="date">2017-05-05</span></h3>
+
+  <h1>centos7 lvs扩容</h1>
+
+<ol>
+<li><p>创建新分区</p>
+
+<pre><code>fdisk -l        //查看可用硬盘(如：sda)
+fdisk /dev/sda  
+n               //新增分区
+w               //保存操作
+</code></pre></li>
+
+<li><p>修改分区格式为lvm</p>
+
+<pre><code>fdisk /dev/sda
+t               //修改分区类型
+L               //显示分区类型表
+8e              //修改分区类型为lvm
+w               //保存修改
+</code></pre></li>
+
+<li><p>创建物理卷</p></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/java/alibaba-java/">alibaba-java</a> <span class="date">2017-03-20</span></h3>
 
   <p>根据<a href="https://yq.aliyun.com/attachment/download/?id=1170">阿里巴巴java开发手册.pdf</a>转化。</p>
@@ -196,235 +396,6 @@
 
   <div class="more">
     <a href="/转载/stack%E7%9A%84%E4%B8%89%E7%A7%8D%E5%90%AB%E4%B9%89/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/markdown/%E4%BD%BF%E7%94%A8sublime-text2-%E7%BC%96%E8%BE%91markdown%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/">使用sublime text2 编辑markdown文件并导出带目录的html</a> <span class="date">2015-07-16</span></h3>
-
-  <p>前一篇文章介绍了使用markdown pad2来生成带目录的html文件。但是有很多程序员喜欢使用sublime来进行markdown的编写。这里介绍一下sublime下如何把markdown文件生成带目录的html。</p>
-
-<h2>环境</h2>
-
-<p>win7、 sublime text2</p>
-
-<h2>配置过程</h2>
-
-<p><strong>sublime text 安装 markdown preview插件</strong></p>
-
-<p>sublime text 安装插件基本配置请参看之前的一篇文章：</p>
-
-<p><a href="http://sakyawang.github.io/sublime/sublime-text2-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6/">sublime text2 安装插件</a></p>
-
-<p>ctrl+shift+P 调出窗口，输入 install package --&gt; 输入 markdown preview 选中安装插件。</p>
-
-<p><strong>配置markdown高亮显示</strong></p>
-
-<p>在Preferences -&gt;Package Settings-&gt;Markdown Preview-&gt;Setting Default中找到</p>
-
-
-  <div class="more">
-    <a href="/markdown/%E4%BD%BF%E7%94%A8sublime-text2-%E7%BC%96%E8%BE%91markdown%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/">markdown pad 生成带目录的html</a> <span class="date">2015-07-16</span></h3>
-
-  <h2>环境</h2>
-
-<p>win7、markdown pad 2</p>
-
-<h2>目的</h2>
-
-<p>使用markdown pad 2编辑生成wiki风格的接口文档</p>
-
-<h2>处理方案</h2>
-
-<p>使用markdown pad 2的导出功能和高级设置的Html head 编辑器功能。</p>
-
-<ul>
-<li>工具--&gt;选项--&gt;高级--&gt;Html head 编辑器</li>
-</ul>
-
-<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/markdownpadconfig.png" alt="html head 编辑器" /></p>
-
-<ul>
-<li>打开编辑器</li>
-</ul>
-
-<p>输入：</p>
-
-<pre><code>&lt;script&gt;
-    document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
-        // 生成目录列表
-        var outline = document.createElement(&quot;ul&quot;);
-        outline.setAttribute(&quot;id&quot;, &quot;outline-list&quot;);
-        outline.style.cssText = &quot;border: 1px solid #ccc;&quot;;
-        document.body.insertBefore(outline, document.body.childNodes[0]);
-        // 获取所有标题
-        var headers = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
-        for (var i = 0; i &lt; headers.length; i++) {
-            var header = headers[i];
-            var hash = _hashCode(header.textContent);
-            // MarkdownPad2无法为中文header正确生成id，这里生成一个
-            header.setAttribute(&quot;id&quot;, header.tagName + hash);
-            // 找出它是H几，为后面前置空格准备
-            var prefix = parseInt(header.tagName.replace('H', ''), 10);
-            outline.appendChild(document.createElement(&quot;li&quot;));
-            var a = document.createElement(&quot;a&quot;);
-            // 为目录项设置链接
-            a.setAttribute(&quot;href&quot;, &quot;#&quot; + header.tagName + hash)
-            // 目录项文本前面放置对应的空格
-            a.innerHTML = new Array(prefix * 4).join('&amp;nbsp;') + header.textContent;
-            outline.lastChild.appendChild(a);
-        }
-</code></pre>
-
-
-  <div class="more">
-    <a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/">记一次处理http请求返回json数据中文乱码问题</a> <span class="date">2015-07-10</span></h3>
-
-  <h2>背景</h2>
-
-<p>项目中rest接口返回中文错误提示信息显示乱码。</p>
-
-<h2>环境</h2>
-
-<p>apache httpClient</p>
-
-<p>spring mvc</p>
-
-<p>tomcat</p>
-
-<h2>处理过程</h2>
-
-<h3>分析理清问题</h3>
-
-<p>接口部署在本地tomcat上时，使用Apache httpClient客户端访问无乱码。</p>
-
-<p>接口部署到服务器上的tomcat时，使用Apache httpClient客户端访问返回结果中文乱码。</p>
-
-
-  <div class="more">
-    <a href="/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/">post请求执行window open</a> <span class="date">2015-07-09</span></h3>
-
-  <h2>背景</h2>
-
-<p>一般在html中打开新页面都是直接使用window.open(url)，打开新的页面是get请求，如果url有参数的话URL就会很长，在浏览器上会有参数显示。这里使用post请求可以避免该问题。</p>
-
-<h2>处理方案</h2>
-
-<p>创建一个form表单method为post方式：</p>
-
-<pre><code>&lt;form action=&quot;&quot; method=&quot;post&quot; name=&quot;targetForm&quot; id=&quot;targetForm&quot; target=&quot;targetForm&quot; onsubmit=&quot;openWindow('targetForm');&quot;&gt;
-    &lt;input type=&quot;hidden&quot; name=&quot;name1&quot; id=&quot;id1&quot;/&gt;
-    &lt;input type=&quot;hidden&quot; name=&quot;name2&quot; id=&quot;id2&quot;/&gt;
-&lt;/form&gt;
-</code></pre>
-
-<p>添加onsubmit事件，执行openWindow（），具体js函数如下：</p>
-
-<pre><code>function openWindow(name){    
-    window.open('about:blank',name);     
-}  
-</code></pre>
-
-<p>关键点是：</p>
-
-
-  <div class="more">
-    <a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/">java des加密实践</a> <span class="date">2015-07-09</span></h3>
-
-  <h2>背景</h2>
-
-<p>工作中数据加密是C++实现的des加密，业务方是java语言。现在需要使用java对C++加密的内容进行解密。</p>
-
-<p>思路：</p>
-
-<p>根据C++的des加密算法实现，使用java进行逆向处理。</p>
-
-<p>具体代码如下：</p>
-
-<pre><code>import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-public class DESUtil {
-
-    private static final String Key = &quot;d4odQA#5&quot;;
-    private static final String Algorithm = &quot;DES&quot;;  //定义 加密算法,可用 DES,DESede,Blowfish
-
-    // 加密字符串
-    public static String encryptMode(String src) {
-        String hexStr = &quot;&quot;;
-        try {
-            Cipher c1 = Cipher.getInstance(&quot;DES/ECB/NoPadding&quot;);
-            SecretKey key = new SecretKeySpec(Key.getBytes(), Algorithm);//生成加密解密需要的Key
-            c1.init(Cipher.ENCRYPT_MODE, key);
-            byte[] bytes = c1.doFinal(getByte(src));
-            hexStr = bytesToHexString(bytes);
-        } catch (java.security.NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        } catch (javax.crypto.NoSuchPaddingException e2) {
-            e2.printStackTrace();
-        } catch (java.lang.Exception e3) {
-            e3.printStackTrace();
-        }
-        return hexStr;
-    }
-</code></pre>
-
-
-  <div class="more">
-    <a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/微信公众平台/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">微信公众平台开发入门</a> <span class="date">2015-07-08</span></h3>
-
-  <p>因工作需要，要在微信公众平台上进行服务号的开发，现记录下开发流程。</p>
-
-<h2>环境</h2>
-
-<p>win7、IDEA14、Jdk1.7、微信公众平台测试号、外网域名</p>
-
-<h2>搭建基础开发环境</h2>
-
-<p>搭建web项目使用最简单的Servlet做消息入口。</p>
-
-<p>创建WeChatServlet 继承 HttpServlet</p>
-
-<p>在web.xml中配置sevlet的url路径</p>
-
-<pre><code>&lt;servlet-name&gt;wechat&lt;/servlet-name&gt;
-&lt;servlet-class&gt;cn.wh.wechat.WeChatServlet&lt;/servlet-class&gt;
-&lt;/servlet&gt;
-&lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;wechat&lt;/servlet-name&gt;
-    &lt;url-pattern&gt;/wechat&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
-</code></pre>
-
-
-  <div class="more">
-    <a href="/微信公众平台/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/" class="btn">read more..</a>
   </div>
 </div>
 

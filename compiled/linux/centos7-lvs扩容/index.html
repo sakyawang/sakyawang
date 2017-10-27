@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>记一次处理http请求返回json数据中文乱码问题</title>
+    <title>centos7 lvs扩容</title>
   
-    <meta name="description" content="记录一次http请求返回json数据中文乱码问题">
+    <meta name="description" content="centos7 lvs已挂载目录扩容">
   
     <meta name="author" content="Hao Wang">
 
@@ -80,67 +80,65 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>记一次处理http请求返回json数据中文乱码问题 </h1>
+  <h1>centos7 lvs扩容 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>背景</h2>
+    <h1>centos7 lvs扩容</h1>
 
-<p>项目中rest接口返回中文错误提示信息显示乱码。</p>
+<ol>
+<li><p>创建新分区</p>
 
-<h2>环境</h2>
+<pre><code>fdisk -l        //查看可用硬盘(如：sda)
+fdisk /dev/sda  
+n               //新增分区
+w               //保存操作
+</code></pre></li>
 
-<p>apache httpClient</p>
+<li><p>修改分区格式为lvm</p>
 
-<p>spring mvc</p>
+<pre><code>fdisk /dev/sda
+t               //修改分区类型
+L               //显示分区类型表
+8e              //修改分区类型为lvm
+w               //保存修改
+</code></pre></li>
 
-<p>tomcat</p>
+<li><p>创建物理卷</p>
 
-<h2>处理过程</h2>
+<pre><code>pvcreate /dev/sda3 //创建物理卷sda3,最好重启一下
+</code></pre></li>
 
-<h3>分析理清问题</h3>
+<li><p>centos卷组扩展</p>
 
-<p>接口部署在本地tomcat上时，使用Apache httpClient客户端访问无乱码。</p>
+<pre><code>pvs                         //查看物理卷列表
+vgs                         //查看卷组列表
+vgextend centos /dev/sda3   //centos卷组追加/dev/sda3物理卷
+</code></pre></li>
 
-<p>接口部署到服务器上的tomcat时，使用Apache httpClient客户端访问返回结果中文乱码。</p>
+<li><p>逻辑卷扩展</p>
 
-<h3>初次排查</h3>
-
-<p>检查HttpClient请求Content-type为UTF-8，排除客户端编码问题。</p>
-
-<h3>再次排查</h3>
-
-<p>查看本地tomcat编码为默认编码，服务器tomcat编码为UTF-8编码。怀疑是tomcat编码问题导致的，
-修改本地tomcat编码为UTF-8，测试无乱码，排除tomcat编码问题。</p>
-
-<h3>第三次排查</h3>
-
-<p>因为客户端和服务器编码都没有问题，怀疑是接口输出数据有问题。添加日志记录输出结果，发现数据无乱码。</p>
-
-<p>怀疑是spring mvc 视图返回json字符串时编码有问题。百度一下发现spring mvc确实存在视图返回json字符串时使用的是iso-8859-1编码。</p>
-
-<p>测试之，使用response out流输出json字符串，结果无乱码。</p>
-
-<p>确定问题和spring mvc返回json数据编码导致。</p>
-
-<p>暂时使用输出流直接输出json字符串。</p>
-
-<p>后续再测试网上提供的其他解决方案。</p>
+<pre><code>lvs                                         //逻辑卷列表
+lvextend -L +30G /dev/mapper/centos-root    //逻辑卷扩展大小 
+lvscan            //List all logical volumes in all volume groups
+xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
+</code></pre></li>
+</ol>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" title="markdown pad 生成带目录的html">&larr; Previous</a></li>
+            <li class="prev"><a href="/nodejs/Centos7-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEelasticsearch-head/" title="Centos7 安装配置elasticsearch-head">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/" title="post请求执行window open">Next &rarr;</a></li>
+            <li class="next"><a href="/java/alibaba-java/" title="alibaba-java">Next &rarr;</a></li>
           
           
         </ul>
@@ -166,13 +164,13 @@
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2015-07-10</span></div>
+    <div class="date"><span>2017-05-05</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#java-ref">java <span>4</span></a>
+  <a href="/categories/#linux-ref">linux <span>1</span></a>
 </li>
     
     </ul>
@@ -181,19 +179,23 @@
     <ul class="tag_box">
     
       <li>
-  <a href="/tags/#java-ref">java <span>5</span></a>
+  <a href="/tags/#linux-ref">linux <span>2</span></a>
 </li>
     
       <li>
-  <a href="/tags/#spring-mvc-ref">spring mvc <span>1</span></a>
+  <a href="/tags/#centos7-ref">centos7 <span>1</span></a>
 </li>
     
       <li>
-  <a href="/tags/#http-ref">http <span>1</span></a>
+  <a href="/tags/#lvs-ref">lvs <span>1</span></a>
 </li>
     
       <li>
-  <a href="/tags/#json-ref">json <span>1</span></a>
+  <a href="/tags/#lvm-ref">lvm <span>1</span></a>
+</li>
+    
+      <li>
+  <a href="/tags/#fdisk-ref">fdisk <span>1</span></a>
 </li>
     
     </ul>

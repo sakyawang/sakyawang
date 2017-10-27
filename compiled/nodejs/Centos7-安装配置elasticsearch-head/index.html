@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>记一次处理http请求返回json数据中文乱码问题</title>
+    <title>Centos7 安装配置elasticsearch-head</title>
   
-    <meta name="description" content="记录一次http请求返回json数据中文乱码问题">
+    <meta name="description" content="Centos7 安装配置elasticsearch-head">
   
     <meta name="author" content="Hao Wang">
 
@@ -80,67 +80,98 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>记一次处理http请求返回json数据中文乱码问题 </h1>
+  <h1>Centos7 安装配置elasticsearch-head </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>背景</h2>
+    <h1>Centos7 安装配置elasticsearch-head</h1>
 
-<p>项目中rest接口返回中文错误提示信息显示乱码。</p>
+<h2>安装nodejs</h2>
 
-<h2>环境</h2>
+<ol>
+<li><p>配置yum源</p>
 
-<p>apache httpClient</p>
+<pre><code>curl --silent --location https://rpm.nodesource.com/setup_7.x | bash -
+</code></pre></li>
 
-<p>spring mvc</p>
+<li><p>安装nodejs和npm</p>
 
-<p>tomcat</p>
+<pre><code>yum install -y nodejs
+</code></pre></li>
+</ol>
 
-<h2>处理过程</h2>
+<h2>配置淘宝npm镜像</h2>
 
-<h3>分析理清问题</h3>
+<ol>
+<li><p>通过config命令</p>
 
-<p>接口部署在本地tomcat上时，使用Apache httpClient客户端访问无乱码。</p>
+<pre><code>npm config set registry https://registry.npm.taobao.org 
+npm info underscore （如果上面配置正确这个命令会有字符串response）
+</code></pre></li>
 
-<p>接口部署到服务器上的tomcat时，使用Apache httpClient客户端访问返回结果中文乱码。</p>
+<li><p>命令行指定</p>
 
-<h3>初次排查</h3>
+<pre><code>npm --registry https://registry.npm.taobao.org info underscore 
+</code></pre></li>
 
-<p>检查HttpClient请求Content-type为UTF-8，排除客户端编码问题。</p>
+<li><p>编辑 ~/.npmrc 加入下面内容</p>
 
-<h3>再次排查</h3>
+<pre><code>registry = https://registry.npm.taobao.org
+</code></pre></li>
+</ol>
 
-<p>查看本地tomcat编码为默认编码，服务器tomcat编码为UTF-8编码。怀疑是tomcat编码问题导致的，
-修改本地tomcat编码为UTF-8，测试无乱码，排除tomcat编码问题。</p>
+<h2>安装phantomjs（elasticsearch-head依赖）</h2>
 
-<h3>第三次排查</h3>
+<ol>
+<li><a href="https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2">下载</a></li>
 
-<p>因为客户端和服务器编码都没有问题，怀疑是接口输出数据有问题。添加日志记录输出结果，发现数据无乱码。</p>
+<li><p>安装配置</p>
 
-<p>怀疑是spring mvc 视图返回json字符串时编码有问题。百度一下发现spring mvc确实存在视图返回json字符串时使用的是iso-8859-1编码。</p>
+<pre><code>tar xvf phantomjs-2.1.1-linux-x86_64.tar.bz2
+export PHANTOMJS_HOME=/path/phantomjs/bin
+</code></pre></li>
+</ol>
 
-<p>测试之，使用response out流输出json字符串，结果无乱码。</p>
+<h2>安装配置运行elasticsearch-head</h2>
 
-<p>确定问题和spring mvc返回json数据编码导致。</p>
+<ol>
+<li><p>安装</p>
 
-<p>暂时使用输出流直接输出json字符串。</p>
+<pre><code>git clone git://github.com/mobz/elasticsearch-head.git
+</code></pre></li>
 
-<p>后续再测试网上提供的其他解决方案。</p>
+<li><p>配置</p>
+
+<pre><code>npm install
+
+vim ./_site/app.js
+app.App = ui.AbstractWidget.extend({
+        defaults: {
+                base_uri: &quot;http://10.2.6.2:9200&quot;
+        }
+</code></pre></li>
+
+<li><p>运行访问</p>
+
+<pre><code>npm run start
+http://10.2.6.2:9100
+</code></pre></li>
+</ol>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" title="markdown pad 生成带目录的html">&larr; Previous</a></li>
+            <li class="prev"><a href="/nexus/nexus/" title="nexus">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/" title="post请求执行window open">Next &rarr;</a></li>
+            <li class="next"><a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/" title="centos7 lvs扩容">Next &rarr;</a></li>
           
           
         </ul>
@@ -166,13 +197,13 @@
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2015-07-10</span></div>
+    <div class="date"><span>2017-05-10</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#java-ref">java <span>4</span></a>
+  <a href="/categories/#nodejs-ref">nodejs <span>1</span></a>
 </li>
     
     </ul>
@@ -181,19 +212,19 @@
     <ul class="tag_box">
     
       <li>
-  <a href="/tags/#java-ref">java <span>5</span></a>
+  <a href="/tags/#nodejs-ref">nodejs <span>1</span></a>
 </li>
     
       <li>
-  <a href="/tags/#spring-mvc-ref">spring mvc <span>1</span></a>
+  <a href="/tags/#yum-ref">yum <span>1</span></a>
 </li>
     
       <li>
-  <a href="/tags/#http-ref">http <span>1</span></a>
+  <a href="/tags/#centos-ref">centos <span>1</span></a>
 </li>
     
       <li>
-  <a href="/tags/#json-ref">json <span>1</span></a>
+  <a href="/tags/#elasticsearch-ref">elasticsearch <span>1</span></a>
 </li>
     
     </ul>
