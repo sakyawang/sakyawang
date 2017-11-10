@@ -1,0 +1,9 @@
+language: go
+go: 1.8
+
+before_install:
+  - go get -u github.com/wendal/gor
+  - go install github.com/wendal/gor/gor
+
+script:
+  - gor compile
