@@ -1,4 +1,5 @@
 language: bash
 
 script:
+  - bash sudo chmod +x gor
   - bash gor compile
