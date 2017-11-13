@@ -16,5 +16,5 @@ after_script:
   - git config user.email "wanghao0319072@gmail.com"
   - git add .
   - git commit -m "update blog"
-  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
-
+  - git remote add origin https://${GH_TOKEN}@${GH_REF}
+  - git push --force --quiet --set-upstream origin master
