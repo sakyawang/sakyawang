@@ -1,5 +1,5 @@
 language: bash
 
 script:
-  - bash chmod +x gor
-  - bash ./gor compile
+  - chmod +x gor
+  - ./gor compile
