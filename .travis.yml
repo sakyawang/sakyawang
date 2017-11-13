@@ -1,6 +1,4 @@
-language: go
-go: 1.5
-
+language: bash
 
 script:
-  - ./gor compile
+  - bash gor compile
