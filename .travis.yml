@@ -11,7 +11,7 @@ script:
 after_script:
   - cd compiled
   - git init
-  - git config user.name "sakyawang"
+  - git config user.name "wanghao0319072@gmail.com"
   - git config user.email "wanghao0319072@gmail.com"
   - git add .
   - git commit -m "update blog"
