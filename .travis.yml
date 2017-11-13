@@ -3,7 +3,6 @@ language: bash
 env:
   global:
     - GH_REF: sakyawang/sakyawang.github.com.git 
-    - GH_TOKEN: f9b455d960fb5c58180b282bb0e581fe15a6684e
     - secure: "OnINKutx08RdqIG5rr1mPdbNFEUq07qat1uxCrhU4jFmLB1+pNblOuFdzR0RWWMarXWbvu0giQQ5RC16NcPLAde5axeP4wbSx4xbS6Ljr7jm/S3nz0cj8BwerJ9tm87jwYva6l91bVjiTiC+A8WSNxsxb9qdoydtgAP9hHazXVhE8zFBYwLkKlyZ2j77h49JdWlQJodJrjOEoYspC+RewKyxV3WHDrpuLs96g2+nsB/l9ZdTU76UZnhsDSQNbiGC8VQnOCQsM0fmdu1H6+gGFj+pTd/jPo2ongiBmZ852KzHkv1EiuBOLtw9eILwkVGy9Nd0lExOWi8ny8BrCDMkABGW5uWnXWdpYRFHiROhni3F2JW6i81FUDy0WtiV+EtlwvvVv/twWEq/WFTJgbk7hXg5f1ldTa1+SK7IdOvdWeaOTwu1/bgB1NNZPGvFmMnfeWagKmD7BqRNZ55MUQMqM9qeEMLf0++Mcg88M/yEBrHE8i3Kg7g3TDT9AA4GYCB6EM6yGyRAeGhPMgLlU9fUaZ9NtbqbaaHUCoQZa9DDBQYLhdKL3UBvk6pdqIooFn4M7ZsHwn41m5kQtqcoEEWA7dncZ53/lzPoIRRXrmjhwRYNQoP7FQV3tQDPtbujH0GLLpSeYEHEqq31R1GX8kIyfmuVoIuGjZ2bnT5dP1xuWkc="
 
 script:
@@ -17,5 +16,5 @@ after_script:
   - git config user.email "wanghao0319072@gmail.com"
   - git add .
   - git commit -m "update blog"
-  - git push -f "https://${GH_TOKEN}@${GH_REF}" master:master
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
 
