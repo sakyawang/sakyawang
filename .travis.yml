@@ -16,6 +16,6 @@ after_script:
   - git config user.name "sakyawang"
   - git config user.email "wanghao0319072@gmail.com"
   - git add .
-  - git commit -m update blog"
+  - git commit -m "update blog"
   - git push -f "https://${GH_TOKEN}@${GH_REF}"
 
